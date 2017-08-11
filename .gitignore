@@ -1,0 +1,18 @@
+# System tmp files
+*.o
+.DS_Store
+.*.swp
+key-build*
+*.orig
+*.rej
+*~
+.#*
+*#
+.emacs.desktop*
+TAGS*~
+git-src
+.com.apple*
+._*
+
+# tmp file
+*.conf
