@@ -1,10 +1,11 @@
 #!/bin/bash
 
-gHost=
-gPort=53
+gHost="127.0.0.1"
+gPort="53"
+gIpset="ss_rules_dst_forward"
 
 InitIpset() {
-	printf "ipset=/%s/ss_spec_list\n" "$1"
+	printf "ipset=/%s/%s\n" "$1" "$gIpset"
 }
 
 InitServer() {
@@ -12,19 +13,26 @@ InitServer() {
 }
 
 Usage() {
-	printf "Usage: %s OPTION... FILE...\n" "$0"
-	printf "Init dnsmasq config from specified domain list.\n\n"
-	printf "  -d      dns server host, such as '8.8.8.8'\n"
-	printf "  -p      dns server port, such as '53'\n"
+	cat <<-EOF
+		Usage: $0 OPTION... FILE...
+		Init dnsmasq config from specified domain list.
+
+		  -d      dns host, use '$gHost' as default'
+		  -p      dns port, use '$gPort' as default
+		  -s      ipset name, use '$gIpset' as default
+	EOF
 }
 
-while getopts "d:p:h" opt; do
+while getopts "d:p:s:h" opt; do
 	case "${opt}" in
 	d)
 		gHost=${OPTARG}
 		;;
 	p)
 		gPort=${OPTARG}
+		;;
+	s)
+		gIpset=${OPTARG}
 		;;
 	h)
 		Usage
